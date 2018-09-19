@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "400364389031-7s6f5b5i5t03stcga9knh8f6edp82huk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.csw.narsi2",
+            "certificate_hash": "4ba1c45e32e0b70cd9f6c665016ca0dd594fe012"
+          }
+        },
+        {
           "client_id": "400364389031-79kjr5kslglmu0hgdj17la9fjujo1vlf.apps.googleusercontent.com",
           "client_type": 3
         }

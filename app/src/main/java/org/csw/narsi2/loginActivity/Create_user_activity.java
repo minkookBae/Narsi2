@@ -36,9 +36,12 @@ public class Create_user_activity extends AppCompatActivity{
         createUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(email.getText().toString().trim(), password.getText().toString().trim());
-                startActivity(new Intent(Create_user_activity.this, loginactivity.class));
-                finish();
+                if(!(email.getText().toString().equals("") || password.getText().toString().equals(""))) {
+                    createAccount(email.getText().toString().trim(), password.getText().toString().trim());
+                    startActivity(new Intent(Create_user_activity.this, loginactivity.class));
+                    finish();
+                }else
+                    Toast.makeText(Create_user_activity.this,"아이디, 비밀번호가 유효하지 않습니다.",Toast.LENGTH_SHORT).show();
             }
         });
     }

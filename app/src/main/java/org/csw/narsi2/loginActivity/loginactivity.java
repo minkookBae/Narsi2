@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.csw.narsi2.MainActivity;
 import org.csw.narsi2.R;
 
 public class loginactivity extends AppCompatActivity {
@@ -28,9 +29,8 @@ public class loginactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginactivity);
-
-        userId = (EditText)findViewById(R.id.user_id1);
-        userPassword = (EditText)findViewById(R.id.user_password1);
+        userId = (EditText) findViewById(R.id.user_id1);
+        userPassword = (EditText) findViewById(R.id.user_password1);
         bt_create_user = (Button) findViewById(R.id.button_create_user);
 
         bt_create_user.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +47,11 @@ public class loginactivity extends AppCompatActivity {
         bt_user_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onStart();
-                signIn(userId.getText().toString(),userPassword.getText().toString());
+                if (userId.getText().toString().equals("") || userPassword.getText().toString().equals(""))
+                    Toast.makeText(loginactivity.this, "아이디, 비밀번호가 유효하지 않습니다.", Toast.LENGTH_SHORT).show();
+                else
+                    signIn(userId.getText().toString(), userPassword.getText().toString());
+
             }
         });
 
@@ -59,13 +62,14 @@ public class loginactivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
+        if (currentUser != null) {
             Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(loginactivity.this, MainActivity.class));
         }
     }
 
 
-    private void signIn(String userId, String userPassword){
+    private void signIn(String userId, String userPassword) {
         mAuth.signInWithEmailAndPassword(userId, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -73,7 +77,10 @@ public class loginactivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(loginactivity.this,"로그인 되었습니다.",Toast.LENGTH_SHORT).show();
+                            if (user != null) {
+                                Toast.makeText(loginactivity.this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(loginactivity.this, MainActivity.class));
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(loginactivity.this, "아이디, 비밀번호를 확인해 주세요.",
